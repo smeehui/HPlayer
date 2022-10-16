@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mp3 PLayer</title>
+    <link rel="stylesheet" href="./asset/css/style.css" />
+    <!-- Animations -->
+    <link rel="stylesheet" href="./asset/css/animations.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
+</head>
+
+<body>
+    <div class="site-container">
+        <header class="site-header mlr-a">
+            <div class="logo bl-cen bd-r">
+                <img src="./asset/img/logo.png" alt="HMp3" class="logo-cent" />
+            </div>
+            <div class="header-mid bl-cen bd-r">
+                <div class="search bl-cen">
+                    <div class="search-icon bl-cen">
+                        <i class="fa-solid fa-magnifying-glass bl-cen light inc"></i>
+                    </div>
+                    <input class="search-input" oninput="logger(this.value)" type="search" />
+                </div>
+            </div>
+            <div class="rheader bl-cen">
+                <div class="avt">
+                    <img src="./asset/img/avt.jpg" alt="" />
+                </div>
+                <div class="user">
+                    <h4 class="name">Quang Huy</h4>
+                    <span>Active</span>
+                    <span><i class="fa-solid fa-circle-check tick"></i
+                        ></span>
+                </div>
+                <div class="notif">
+                    <i class="fa-regular fa-bell inc"></i>
+                </div>
+            </div>
+        </header>
+        <div class="site-content mlr-a">
+            <div class="lside bd-r">
+                <div class="side-nav">
+                    <ul style="list-style-type: none" class="side-items bl-cen">
+                        <p class="syl">Discover</p>
+                        <li class="lside-item row">
+                            <span class="lside-icn"><i class="inc fa-solid fa-compact-disc"></i
+                                ></span>
+                            <p>Songs</p>
+                        </li>
+                        <li class="lside-item row">
+                            <span class="lside-icn"><i
+                                        class="inc fa-solid fa-microphone-lines"
+                                    ></i
+                                ></span>
+                            <p>Artist</p>
+                        </li>
+                        <li class="lside-item row">
+                            <span class="lside-icn"><i
+                                        class="fa-regular fa-album-collection"
+                                    ></i
+                                    ><i class="inc fa-solid fa-images"></i
+                                ></span>
+                            <p>Album</p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="config"></div>
+            </div>
+            <div class="main bd-r">
+                <div class="player bl-cen">
+                    <div class="player-container"></div>
+                </div>
+                <div class="bl-cen" style="padding: 0px 10px 10px 10px">
+                    <div class="playlist">
+                        <p class="section tsection">
+                            Songs
+                            <span>
+                                    <div
+                                        id="add"
+                                        class="add hov-z"
+                                        style="right: 48px"
+                                    >
+                                        <i class="fa-solid fa-plus"></i>
+                                    </div>
+                                </span>
+                            <span>
+                                    <label
+                                        for="viewRange"
+                                        class="view-range hov-z"
+                                        ><i class="fa-solid fa-arrow-up"></i
+                                    ></label>
+                                    <input
+                                        hidden
+                                        type="checkbox"
+                                        id="viewRange"
+                                /></span>
+                            <i class="fa-solid fa-grip view hov-z"></i>
+                        </p>
+                        <table class="list">
+                            <thead class="thead">
+                                <tr>
+                                    <th class="pointer" id="ID" style="
+                                                width: 10%;
+                                                text-align: center;
+                                            ">
+                                        #
+                                    </th>
+                                    <th class="pointer" style="width: 10%"></th>
+                                    <th class="pointer" id="title" style="width: 25%">
+                                        TITLE
+                                    </th>
+                                    <th style="width: 90px" class="pointer" id="artist">
+                                        ARTIST
+                                    </th>
+                                    <th style="width: 70px" class="pointer" id="artist">
+                                        GENRE
+                                    </th>
+                                    <th class="pointer" id="ablum">
+                                        ALBUM
+                                    </th>
+                                    <th class="pointer" style="width: 10%"></th>
+                                </tr>
+                            </thead>
+                            <tbody class="list-body"></tbody>
+                        </table>
+                        <div class="page-nav bl-cen" style="vertical-align: middle">
+                            <span class="hov-z page-nav-btn bl-cen prev-page"><i class="fa-solid fa-less-than"></i
+                                ></span>
+
+                            <input type="text" value="1" class="page-num page-nav-btn" />
+                            <span class="hov-z page-nav-btn bl-cen next-page"><i class="fa-solid fa-greater-than"></i
+                                ></span>
+                        </div>
+                        <div class="grid hidden"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="rside">
+                <div class="rect">
+                    <table class="rect-list">
+                        <caption class="syl" style="text-align: left; margin: 5px 0">
+                            Recently played
+                        </caption>
+                        <tbody class="rect-played"></tbody>
+                    </table>
+                </div>
+                <div class="author"></div>
+            </div>
+        </div>
+        <div class="playing-control bl-cen">
+            <div class="top-control">
+                <div class="share bl-cen">
+                    <div class="share-items bl-cen">
+                        <i class="fa-brands fa-facebook ctl-icn"></i>
+                        <i class="fa-brands fa-instagram ctl-icn"></i>
+                    </div>
+                </div>
+                <div class="controlers bl-cen">
+                    <div class="suffle ctl-icn">
+                        <i class="fa-solid fa-shuffle"></i>
+                    </div>
+                    <div class="prev ctl-icn">
+                        <i class="fa-solid fa-backward"></i>
+                    </div>
+                    <div class="play pause ctl-icn">
+                        <i class="fa-solid fa-circle-play"></i>
+                    </div>
+                    <div class="next ctl-icn">
+                        <i class="fa-solid fa-forward"></i>
+                    </div>
+                    <div class="repeat ctl-icn">
+                        <i class="fa-solid fa-repeat"></i>
+                    </div>
+                </div>
+                <div class="volume bl-cen">
+                    <div class="volume-ctl bl-cen">
+                        <i class="fa-solid fa-volume-low ctl-icn down-vol"></i>
+                        <input class="volume-slider" style="height: 5px; width: 65%; margin: 0 10px" type="range" min="0" max="1" step="0.01" />
+                        <i class="fa-solid fa-volume-high ctl-icn up-vol"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="slider-con bl-cen" style="width: 100%">
+                <div class="slider bl-cen">
+                    <span class="curr" style="width: 15%">00:00</span>
+                    <input class="progress" type="range" name="" value="0" min="1" max="100" step="1" style="width: 100%; margin: 0 10px; height: 5px" />
+                    <span class="rem" style="width: 15%">99:99</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <audio class="audio" preload="metadata" src=""></audio>
+    <div class="modal hidden"></div>
+
+    <div class="modal-form">
+        <div class="close-modal">
+            <i class="fa-regular fa-circle-xmark"></i>
+        </div>
+        <form action="" class="form" onkeydown="return event.key != 'Enter'">
+            <div class="left">
+                <label class="form-image bl-cen hov-z" id="formImage" for="fileInp">
+                        <div class="bl-cen img-submit">
+                            <label
+                                for="textInp"
+                                class="heading"
+                                style="width: auto; align-self: center"
+                            >
+                                THUMBNAIL:</label
+                            >
+                            <span>Enter Link:</span>
+                            <input
+                                id="textInp"
+                                class="edit-input"
+                                style="width: 60%"
+                                type="text"
+                                src=""
+                                alt=""
+                            />
+                            <span style="align-self: center; width: auto"
+                                >or:</span
+                            >
+                            <label
+                                for="fileInp"
+                                class="heading upload pointer hov-z"
+                                >Upload</label
+                            >
+                            <input
+                                id="fileInp"
+                                class="hidden"
+                                type="file"
+                                accept="image/*"
+                            />
+                        </div>
+                        <div class="cd-inside"></div>
+                    </label>
+            </div>
+            <div class="right">
+                <div class="r-container bl-cen">
+                    <div class="input-item bl-cen">
+                        <label for="title" class="heading">TITLE</label>
+
+                        <input type="text" class="edit-input" id="formTitle" />
+                    </div>
+                    <div class="bl-cen form-mid">
+                        <div style="width: 59%" class="input-item">
+                            <label for="artist" class="heading">ARTIST</label
+                                >
+                                <input
+                                    type="text"
+                                    class="edit-input"
+                                    id="formArtist"
+                                />
+                            </div>
+                            <div
+                                style="width: 40%; margin-top: 0"
+                                class="input-item"
+                            >
+                                <label for="artist" class="heading"
+                                    >GENRE</label
+                                >
+                                <input
+                                    type="text"
+                                    class="edit-input"
+                                    id="formGenre"
+                                />
+                            </div>
+                        </div>
+                        <div class="bl-cen form-mid">
+                            <div class="input-item" style="width: 60%">
+                                <label for="album" class="heading">ALBUM</label>
+                            <input type="text" class="edit-input" id="formAlbum" />
+                        </div>
+                        <div class="input-item" style="width: 39%; display: flex; margin-top: 0">
+                            <label for="mp3" class="heading">MP3</label>
+                            <label for="mp3" id="formMp3" class="edit-input btn pointer" style="
+                                        text-align: center;
+                                        line-height: 35px;
+                                        color: rgb(87, 87, 87);
+                                        height: 35px;
+                                    ">
+                                    Up load</label
+                                >
+                                <input
+                                    type="file"
+                                    id="mp3"
+                                    hidden
+                                    class="edit-input"
+                                    accept="audio/*"
+                                />
+                            </div>
+                        </div>
+                        <div
+                            class="input-item bl-cen"
+                            style="
+                                display: flex;
+                                flex-direction: row;
+                                justify-content: space-between;
+                            "
+                        >
+                            <button class="edit-input form-submit btn">
+                                Save</button
+                            ><button
+                                class="edit-input form-cancel btn"
+                                type="reset"
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                id="delBtn"
+                                class="edit-input form-del btn hidden"
+                            >
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </body>
+    <script src="./app.js"></script>
+</html>
