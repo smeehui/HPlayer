@@ -389,7 +389,7 @@ const app = {
                 const value = Number(
                     element.closest(".edit").parentElement.dataset.index,
                 );
-                delBtn.classList.toggle("hidden");
+                delBtn.classList.remove("hidden");
                 imgSubmit.classList.add("hidden");
                 formImage.style.animation =
                     "spin 3s cubic-bezier(0.075, 0.82, 0.165, 1) 0.5s";
@@ -542,7 +542,7 @@ const app = {
             }
         };
         $(".close-modal").onclick = () => {
-            delBtn.classList.add("hidden");
+            delBtn.classList.remove("hidden");
             $(".form").reset();
             imgSubmit.classList.toggle("hidden");
             app.hideModal();
@@ -559,6 +559,7 @@ const app = {
             app.render();
         };
         add.onclick = () => {
+            delBtn.classList.add("hidden");
             app.openModal();
             app.openEdit();
         };
