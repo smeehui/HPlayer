@@ -140,6 +140,7 @@ const app = {
                 $(".page-nav").classList.remove("hidden");
                 app.renderList(songs);
             }
+            songCount.innerText = app.songs.length;
         },
         renderList: function(songs) {
                 if (songs) {
@@ -235,7 +236,6 @@ const app = {
         grid.innerHTML = htmls.join("");
     },
     renderPlaying: function () {
-        console.log(1);
         const htmls = `
         <div class="player-container" style="background-image: url(${
             app.currentSong.img
@@ -508,8 +508,8 @@ const app = {
         // modal
         modalForm.onclick = (e) => {
             const elClass = e.target.classList;
+            e.preventDefault();
             if (elClass.contains("form-submit")) {
-                e.preventDefault();
                 const id =
                     e.target.dataset.id === "undefined"
                         ? app.songs.length + 1
@@ -735,14 +735,19 @@ const app = {
         } catch (error) {}
     },
     deletSong: function (id) {
+        console.log(id);
         const check = confirm("Do you really want to delete this song?");
         if (check) {
+            if (app.currentIndex == id) {
+                console.log(1);
+                app.nextSong();
+            }
             app.songs.splice(id, 1);
             app.playedSongs.splice(id, 1);
             app.hideModal();
             app.pagination();
-            app.render();
             app.renderPlayedList();
+            app.render();
         } else {
             app.hideModal();
         }
