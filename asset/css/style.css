@@ -694,7 +694,7 @@ table td {
 
 .modal-form {
     box-shadow: 0 0 10px #ffffff;
-    background-image: url(/asset/img/modal.jpg);
+    background-image: url(./asset/img/modal.jpg);
     padding: 10px;
     border-radius: 10px;
     background-color: #fff;
