@@ -110,7 +110,7 @@
 /* scroll bar */
 
 ::-webkit-scrollbar {
-    width: 5px;
+    width: 8px;
     height: 5px;
     display: none;
     opacity: 0.5;
@@ -431,6 +431,11 @@ thead {
 .grid:hover::-webkit-scrollbar-thumb {
     background: rgba(75, 75, 75, 0.315);
     opacity: 0.5;
+    display: block;
+}
+
+.grid:hover::-webkit-scrollbar-track,
+.grid:hover::-webkit-scrollbar {
     display: block;
 }
 
