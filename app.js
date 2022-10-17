@@ -538,7 +538,7 @@ const app = {
             } else if (elClass.contains("form-del")) {
                 app.deletSong(e.target.dataset.id);
             } else if (elClass.contains("form-image")) {
-                $(".img-submit").classList.toggle("hidden");
+                imgSubmit.classList.toggle("hidden");
             }
         };
         $(".close-modal").onclick = () => {
@@ -559,6 +559,7 @@ const app = {
             app.render();
         };
         add.onclick = () => {
+            imgSubmit.classList.remove("hidden");
             delBtn.classList.add("hidden");
             app.openModal();
             app.openEdit();
