@@ -30,6 +30,7 @@ const downVol = $(".down-vol");
 const sortID = $("#ID");
 const sortTitle = $("#title");
 const sortArtit = $("#artist");
+const sortGenre = $("#genre");
 const sortAlbum = $("#ablum");
 const searchInp = $(".search-input");
 const imgSubmit = $(".img-submit");
@@ -37,174 +38,185 @@ const imgSubmit = $(".img-submit");
 const modal = $(".modal");
 const modalForm = $(".modal-form");
 const formImage = $(".form-image");
-
 const app = {
-        db: [{
+    db: [
+        {
             id: 0,
             title: "All Of My Days",
             album: "Crash Landing On You (OST)",
             artist: "SeJeon",
             gerne: "Pop",
-            path: "./asset/mp3/song1.mp3",
-            img: "./asset/img/songs/song1.jpg",
-        }, {
+            path: "/Mp3Player/asset/mp3/song1.mp3",
+            img: "/Mp3Player/asset/img/songs/song1.jpg",
+        },
+        {
             id: 1,
             title: "Chúng Ta Sau Này",
             album: "Chúng Ta Sau Này (Single)",
             artist: "T.R.I",
             gerne: "V-Pop",
-            path: "./asset/mp3/song2.mp3",
-            img: "./asset/img/songs/song2.jpg",
-        }, {
+            path: "/Mp3Player/asset/mp3/song2.mp3",
+            img: "/Mp3Player/asset/img/songs/song2.jpg",
+        },
+        {
             id: 2,
             title: "Dù Chẳng Phải Anh",
             album: "Dù Chẳng Phải Anh (Single)",
             artist: "Đinh Mạnh Ninh",
             gerne: "Ballad",
-            path: "./asset/mp3/song3.mp3",
-            img: "./asset/img/songs/song3.jpg",
-        }, {
+            path: "/Mp3Player/asset/mp3/song3.mp3",
+            img: "/Mp3Player/asset/img/songs/song3.jpg",
+        },
+        {
             id: 3,
             title: "Giữ Lấy Làm Gì",
             album: "Giữ Lấy Làm Gì (Single)",
             artist: "MONSTAR",
             gerne: "R&B",
-            path: "./asset/mp3/song4.mp3",
-            img: "./asset/img/songs/song4.jpg",
-        }, {
+            path: "/Mp3Player/asset/mp3/song4.mp3",
+            img: "/Mp3Player/asset/img/songs/song4.jpg",
+        },
+        {
             id: 4,
             title: "Nếu",
             album: "Nếu (Single)",
             artist: "Reddy",
             gerne: "Lofi",
-            path: "./asset/mp3/song5.m4a",
-            img: "./asset/img/songs/song5.jpg",
-        }, {
+            path: "/Mp3Player/asset/mp3/song5.m4a",
+            img: "/Mp3Player/asset/img/songs/song5.jpg",
+        },
+        {
             id: 5,
             title: "No One Else",
             album: "More Than Blue (OST)",
             artist: "Lee Seung Chul",
             gerne: "Ballad",
-            path: "./asset/mp3/song6.mp3",
-            img: "./asset/img/songs/song6.jpg",
-        }, {
+            path: "/Mp3Player/asset/mp3/song6.mp3",
+            img: "/Mp3Player/asset/img/songs/song6.jpg",
+        },
+        {
             id: 6,
             title: "Răng Khôn",
             album: "Răng Khôn (Single)",
             artist: "Phí Phương Anh feat RIN",
             gerne: "V-Pop",
-            path: "./asset/mp3/song7.mp3",
-            img: "./asset/img/songs/song7.jpg",
-        }, {
+            path: "/Mp3Player/asset/mp3/song7.mp3",
+            img: "/Mp3Player/asset/img/songs/song7.jpg",
+        },
+        {
             id: 7,
             title: "Sunset",
             album: "Crash Landing On You (OST)",
             artist: "DAVICHI",
             gerne: "Ballad",
-            path: "./asset/mp3/song8.mp3",
-            img: "./asset/img/songs/song8.jpg",
-        }, ],
-        songs: [],
-        config: JSON.parse(localStorage.getItem(H_PLAYER_KEY)) || {},
-        searchSongs: "",
-        pagedSongs: [],
-        playedSongs: [],
-        pagedSearchSongs: [],
-        currentIndex: 0,
-        elementsPerPage: 4,
-        isGrid: false,
-        isPlaying: false,
-        isAsc: true,
-        page: 1,
-        isSuffle: false,
-        isRepeated: false,
-        isShortView: true,
-        setConfig: (key, value) => {
-            app.config[key] = value;
-            localStorage.setItem(H_PLAYER_KEY, JSON.stringify(app.config));
+            path: "/Mp3Player/asset/mp3/song8.mp3",
+            img: "/Mp3Player/asset/img/songs/song8.jpg",
         },
-        loadConfig: () => {
-            app.isSuffle = app.config.isSuffle || false;
-            app.isRepeated = app.config.isRepeated || false;
-            aud.volume = app.config.volume || 0.2;
-            app.currentIndex = app.config.currentIndex || 0;
-            app.page = app.config.page || 1;
-            suffleBtn.classList.toggle("active", app.isSuffle);
-            repeatBtn.classList.toggle("active", app.isRepeated);
-        },
-        render: function(songs) {
-            if (app.isGrid) {
-                $(".page-nav").classList.add("hidden");
-                app.renderGrid();
-            } else {
-                $(".page-nav").classList.remove("hidden");
-                app.renderList(songs);
-            }
-            songCount.innerText = app.songs.length;
-        },
-        renderList: function(songs) {
-                if (songs) {
-                    const htmls = songs.map((song) => {
-                                return `
-                    <tr data-index = "${song.id}" 
-                        class="song ${
-                            app.currentIndex === song.id ? "playing" : null
-                        }" 
-                        style = "height: 51.4px"
-                        >
-                        <td>
-                            ${
-                                app.currentIndex === song.id
-                                    ? `<i class="fa-regular fa-circle-play ctl-icn"></i>`
-                                    : song.id + 1
-                            }</i>
-                        </td>
-                        <td >
-                            <img class="pointer" src="${
-                                song.img
-                            }" style="display:block;object-fit:fill"/>
-                        </td>
-                        <td class="prim pointer">${song.title}</td>
-                        <td>${song.artist}</td>
-                        <td>${song.gerne}</td>
-                        <td class="pointer">${song.album}</td>
-                        <td class="pointer edit">
-                            <i class="fa-solid fa-pencil edit-icn"></i>
-                        </td>
-                    </tr>
-        `;
+    ],
+    songs: [],
+    config: JSON.parse(localStorage.getItem(H_PLAYER_KEY)) || {},
+    searchSongs: "",
+    pagedSongs: [],
+    playedSongs: [],
+    pagedSearchSongs: [],
+    currentIndex: 0,
+    elementsPerPage: 4,
+    isGrid: false,
+    isPlaying: false,
+    isAsc: true,
+    page: 1,
+    isSuffle: false,
+    isRepeated: false,
+    isShortView: true,
+    setConfig: (key, value) => {
+        app.config[key] = value;
+        localStorage.setItem(H_PLAYER_KEY, JSON.stringify(app.config));
+    },
+    loadConfig: () => {
+        app.isSuffle = app.config.isSuffle || false;
+        app.isRepeated = app.config.isRepeated || false;
+        aud.volume = app.config.volume || 0.2;
+        app.currentIndex = app.config.currentIndex || 0;
+        app.page = app.config.page || 1;
+        suffleBtn.classList.toggle("active", app.isSuffle);
+        repeatBtn.classList.toggle("active", app.isRepeated);
+    },
+    render: function (songs) {
+        if (app.isGrid) {
+            $(".page-nav").classList.add("hidden");
+            app.renderGrid();
+        } else {
+            $(".page-nav").classList.remove("hidden");
+            app.renderList(songs);
+        }
+    },
+    renderList: function (songs) {
+        if (songs) {
+            const htmls = songs.map((song) => {
+                return `
+                            <tr data-index = "${song.id}" 
+                                class="song ${
+                                    app.currentIndex === song.id
+                                        ? "playing"
+                                        : null
+                                }" 
+                                style = "height: 51.4px"
+                                >
+                                <td>
+                                    ${
+                                        app.currentIndex === song.id
+                                            ? `<i class="fa-regular fa-circle-play ctl-icn"></i>`
+                                            : song.id + 1
+                                    }</i>
+                                </td>
+                                <td >
+                                    <img class="pointer" src="${
+                                        song.img
+                                    }" style="display:block;object-fit:fill"/>
+                                </td>
+                                <td class="prim pointer">${song.title}</td>
+                                <td>${song.artist}</td>
+                                <td>${song.gerne}</td>
+                                <td class="pointer">${song.album}</td>
+                                <td class="pointer edit">
+                                    <i class="fa-solid fa-pencil edit-icn"></i>
+                                </td>
+                            </tr>
+                `;
             });
             listTbl.innerHTML = htmls.join("");
         } else {
             const htmls = app.pagedSongs.map((song) => {
                 return `
-                    <tr data-index = "${song.id}" 
-                        class="song ${
-                            app.currentIndex === song.id ? "playing" : null
-                        }" 
-                        style = "height: 51.4px"
-                        >
-                        <td>
-                            ${
-                                app.currentIndex === song.id
-                                    ? `<i class="fa-regular fa-circle-play ctl-icn"></i>`
-                                    : song.id + 1
-                            }</i>
-                        </td>
-                        <td>
-                            <img class="pointer" src="${
-                                song.img
-                            }" style=" display:block;object-fit:fill"/>
-                        </td>
-                        <td class="prim pointer">${song.title}</td>
-                        <td>${song.artist}</td>
-                        <td>${song.gerne}</td>
-                        <td class="pointer">${song.album}</td>
-                        <td class="pointer edit">
-                            <i class="fa-solid fa-pencil edit-icn"></i>
-                        </td>
-                    </tr>
-        `;
+                            <tr data-index = "${song.id}" 
+                                class="song ${
+                                    app.currentIndex === song.id
+                                        ? "playing"
+                                        : null
+                                }" 
+                                style = "height: 51.4px"
+                                >
+                                <td>
+                                    ${
+                                        app.currentIndex === song.id
+                                            ? `<i class="fa-regular fa-circle-play ctl-icn"></i>`
+                                            : song.id + 1
+                                    }</i>
+                                </td>
+                                <td>
+                                    <img class="pointer" src="${
+                                        song.img
+                                    }" style=" display:block;object-fit:fill"/>
+                                </td>
+                                <td class="prim pointer">${song.title}</td>
+                                <td>${song.artist}</td>
+                                <td>${song.gerne}</td>
+                                <td class="pointer">${song.album}</td>
+                                <td class="pointer edit">
+                                    <i class="fa-solid fa-pencil edit-icn"></i>
+                                </td>
+                            </tr>
+                `;
             });
             listTbl.innerHTML = htmls.join("");
         }
@@ -212,76 +224,78 @@ const app = {
     renderGrid: function () {
         const htmls = app.songs.map((song, index) => {
             return `
-                <div class="song-card ${
-                    app.currentIndex === index ? "current" : ""
-                }" data-index="${index}">
-                    <div class="song-img" style="background-image: url(${
-                        song.img
-                    });background-size: 147px 147px">
-                    </div>
-                    <div class="float-play">${
-                        app.currentIndex === index
-                            ? `<i class="fa-solid fa-circle-play ">`
-                            : `<i class="fa-solid fa-circle-play ">`
-                    }</i></div>
-                    <div class="song-detl">
-                        <div class="song-title">
-                            ${song.title}
+                        <div class="song-card ${
+                            app.currentIndex === index ? "current" : ""
+                        }" data-index="${index}">
+                            <div class="song-img" style="background-image: url(${
+                                song.img
+                            });background-size: 147px 147px">
+                            </div>
+                            <div class="float-play">${
+                                app.currentIndex === index
+                                    ? `<i class="fa-solid fa-circle-play ">`
+                                    : `<i class="fa-solid fa-circle-play ">`
+                            }</i></div>
+                            <div class="song-detl">
+                                <div class="song-title">
+                                    ${song.title}
+                                </div>
+                                <div class="song-artist sub">${
+                                    song.artist
+                                }</div>
+                            </div>
                         </div>
-                        <div class="song-artist sub">${song.artist}</div>
-                    </div>
-                </div>
-            `;
+                    `;
         });
         grid.innerHTML = htmls.join("");
     },
     renderPlaying: function () {
         const htmls = `
-        <div class="player-container" style="background-image: url(${
-            app.currentSong.img
-        }); transition : all .3s linear; ${
+                <div class="player-container" style="background-image: url(${
+                    app.currentSong.img
+                }); transition : all .3s linear; ${
             app.isShortView ? "height: 220px" : "height:110px"
         }">
-            <div class="playing-img-con" style="background-image: url(${
-                app.currentSong.img
-            });background-size: 200px 200px">
-            <div class="cd-inside"></div>
-            </div>
-            <div class="playing-det bl-cen">
-                <div class="playing-detl bl-cen">
-                    <p class="playing-artist playing-desc">${
-                        app.currentSong.artist
-                    }</p>
-                    <p class="playing-ttl playing-desc">${
-                        app.currentSong.title
-                    }</p>
-                    <p class="playing-alb playing-desc">
-                    ${app.currentSong.album}
-                    </p>
+                    <div class="playing-img-con" style="background-image: url(${
+                        app.currentSong.img
+                    });background-size: 200px 200px">
+                    <div class="cd-inside"></div>
+                    </div>
+                    <div class="playing-det bl-cen">
+                        <div class="playing-detl bl-cen">
+                            <p class="playing-artist playing-desc">${
+                                app.currentSong.artist
+                            }</p>
+                            <p class="playing-ttl playing-desc">${
+                                app.currentSong.title
+                            }</p>
+                            <p class="playing-alb playing-desc">
+                            ${app.currentSong.album}
+                            </p>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-        `;
+                `;
         player.innerHTML = htmls;
     },
     renderPlayedList: function () {
         const htmls = app.playedSongs.map((song) => {
             return `    
-            <tr data-id="${song.id}" class="rect-song pointer ${
+                    <tr data-id="${song.id}" class="rect-song pointer ${
                 song.id === app.currentIndex ? "active" : ""
             } song">
-                <td>
-                    <img src="${song.img}" alt="img" />
-                    <span ></span>
-                </td>
-                <td>
-                    <p>${song.title}</p>
-                    <p class="sub" style="margin-top: 5px">
-                        ${song.artist}
-                    </p>
-                </td>
-            </tr>
-            `;
+                        <td>
+                            <img src="${song.img}" alt="img" />
+                            <span ></span>
+                        </td>
+                        <td>
+                            <p>${song.title}</p>
+                            <p class="sub" style="margin-top: 5px">
+                                ${song.artist}
+                            </p>
+                        </td>
+                    </tr>
+                    `;
         });
         rectPlayed.innerHTML = htmls.join("");
     },
@@ -389,7 +403,7 @@ const app = {
                 const value = Number(
                     element.closest(".edit").parentElement.dataset.index,
                 );
-                delBtn.classList.remove("hidden");
+                delBtn.classList.toggle("hidden");
                 imgSubmit.classList.add("hidden");
                 formImage.style.animation =
                     "spin 3s cubic-bezier(0.075, 0.82, 0.165, 1) 0.5s";
@@ -457,6 +471,9 @@ const app = {
         sortTitle.onclick = (e) => {
             app.sort(e.target.innerText);
         };
+        sortGenre.onclick = (e) => {
+            app.sort(e.target.innerText);
+        };
         sortAlbum.onclick = (e) => {
             app.sort(e.target.innerText);
         };
@@ -492,7 +509,7 @@ const app = {
             app.isRepeated = app.isRepeated ? false : true;
             suffleBtn.classList.toggle("active", app.isSuffle);
             repeatBtn.classList.toggle("active", app.isRepeated);
-            app.repeat();
+            ud.loop = app.isRepeated ? true : false;
             app.setConfig("isRepeated", app.isRepeated);
         };
 
@@ -508,8 +525,8 @@ const app = {
         // modal
         modalForm.onclick = (e) => {
             const elClass = e.target.classList;
-            e.preventDefault();
             if (elClass.contains("form-submit")) {
+                e.preventDefault();
                 const id =
                     e.target.dataset.id === "undefined"
                         ? app.songs.length + 1
@@ -538,11 +555,11 @@ const app = {
             } else if (elClass.contains("form-del")) {
                 app.deletSong(e.target.dataset.id);
             } else if (elClass.contains("form-image")) {
-                imgSubmit.classList.toggle("hidden");
+                $(".img-submit").classList.toggle("hidden");
             }
         };
         $(".close-modal").onclick = () => {
-            delBtn.classList.remove("hidden");
+            delBtn.classList.add("hidden");
             $(".form").reset();
             imgSubmit.classList.toggle("hidden");
             app.hideModal();
@@ -550,7 +567,6 @@ const app = {
         // Recently played
         rectPlayed.onclick = (e) => {
             const songId = Number(e.target.closest(".rect-song").dataset.id);
-            console.log(songId);
             app.currentIndex = songId;
 
             app.renderPlaying();
@@ -559,8 +575,6 @@ const app = {
             app.render();
         };
         add.onclick = () => {
-            imgSubmit.classList.remove("hidden");
-            delBtn.classList.add("hidden");
             app.openModal();
             app.openEdit();
         };
@@ -616,7 +630,6 @@ const app = {
         // On upload audio
         mp3.oninput = (e) => {
             let files = e.target.files;
-            console.log(files);
             if (files[0]) {
                 let tmppath = URL.createObjectURL(files[0]);
                 mp3.dataset.url = tmppath;
@@ -662,7 +675,6 @@ const app = {
     },
     nextSong: () => {
         app.currentIndex++;
-        console.log(app.currentIndex > app.songs.length - 1);
         if (app.currentIndex > app.songs.length - 1) {
             app.currentIndex = 0;
             app.page = 1;
@@ -674,7 +686,6 @@ const app = {
             app.page += 1;
             app.pagination();
         }
-        console.log(5);
         app.renderPlaying();
         app.render();
         app.loadCurrentSong();
@@ -736,25 +747,17 @@ const app = {
         } catch (error) {}
     },
     deletSong: function (id) {
-        console.log(id);
         const check = confirm("Do you really want to delete this song?");
         if (check) {
-            if (app.currentIndex == id) {
-                console.log(1);
-                app.nextSong();
-            }
             app.songs.splice(id, 1);
             app.playedSongs.splice(id, 1);
             app.hideModal();
             app.pagination();
-            app.renderPlayedList();
             app.render();
+            app.renderPlayedList();
         } else {
             app.hideModal();
         }
-    },
-    repeat: () => {
-        aud.loop = app.isRepeated ? true : false;
     },
     openModal: () => {
         modal.classList.remove("hidden");
@@ -768,7 +771,7 @@ const app = {
                 app.songs.forEach((song) => {
                     for (var [key, value] of Object.entries(song)) {
                         if (String(value).search(regex) !== -1) {
-                            if (!value.match(/asset/g)) {
+                            if (!value.match(/Mp3Player/g)) {
                                 checkSongs.push(song);
                             }
                         }
@@ -787,7 +790,6 @@ const app = {
     updateSong: (song) => {
         const id = song.id;
         if (id <= app.songs.length) {
-            console.log();
             app.songs[id].img = song.newImg;
             app.songs[id].title = song.title;
             app.songs[id].artist = song.artist;
@@ -822,6 +824,7 @@ const app = {
         modal.classList.add("hidden");
     },
     sort: (type) => {
+        console.log(type);
         switch (type) {
             case "#":
                 app.songs.sort((a, b) => b.id - a.id);
@@ -860,6 +863,18 @@ const app = {
                 }
                 app.pagination();
                 app.render();
+                break;
+            case "GENRE":
+                if (app.isAsc) {
+                    app.isAsc = false;
+                    app.songs.sort((a, b) => b.gerne.localeCompare(a.gerne));
+                } else {
+                    app.isAsc = true;
+                    app.songs.sort((a, b) => a.gerne.localeCompare(b.gerne));
+                }
+                app.pagination();
+                app.render();
+                break;
             default:
                 break;
         }

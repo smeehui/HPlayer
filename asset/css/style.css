@@ -12,7 +12,6 @@
     transition: 0.3s linear;
 }
 
-
 /* ----global---- */
 
 .mlr-a {
@@ -106,13 +105,11 @@
     color: #eb5151 !important;
 }
 
-
 /* scroll bar */
 
 ::-webkit-scrollbar {
-    width: 8px;
+    width: 5px;
     height: 5px;
-    display: none;
     opacity: 0.5;
 }
 
@@ -129,7 +126,6 @@
     width: 10px;
     cursor: pointer;
 }
-
 
 /* ------Overal------ */
 
@@ -184,7 +180,6 @@
     width: 60%;
 }
 
-
 /* -----Site-header------- */
 
 .search {
@@ -230,7 +225,7 @@
     overflow: hidden;
 }
 
-.avt>img {
+.avt > img {
     width: 100%;
     height: 100%;
     object-fit: contain;
@@ -249,7 +244,6 @@
     width: 10%;
     margin-right: 2%;
 }
-
 
 /* --------Left side------- */
 
@@ -278,7 +272,7 @@
     border-bottom: 1px solid #e8ecf4;
 }
 
-.lside-item+.lside-item {
+.lside-item + .lside-item {
     margin-top: 25px;
 }
 
@@ -286,11 +280,10 @@
     width: 40px;
 }
 
-.lside-icn~p {
+.lside-icn ~ p {
     width: 100%;
     font-size: 1.2rem;
 }
-
 
 /* ----Main----- */
 
@@ -309,7 +302,8 @@
     padding: 10px;
     flex-direction: row;
     justify-content: space-around;
-    background: rgb(235, 235, 235);
+    /* background: rgb(235, 235, 235); */
+    background-size: cover;
 }
 
 .playing-img-con {
@@ -319,8 +313,8 @@
     border-radius: 50%;
     box-shadow: 0 0 5px 5px rgb(206, 206, 206);
 }
-
-<i class="fa-solid fa-arrow-up"></i> {
+/* 
+<i class="fa-solid fa-arrow-up" > </i > {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -332,7 +326,7 @@
     background-color: transparent;
     border: 10px solid #f1f1f1;
     box-shadow: 0 0 5px 5px whitesmoke;
-}
+} */
 
 .playing-det {
     background-color: #b3b3b379;
@@ -366,7 +360,6 @@
     margin-top: 0 !important;
     font-size: 1.2rem;
 }
-
 
 /*----Playlist----- */
 
@@ -423,19 +416,11 @@ thead {
     position: sticky;
     top: 50px;
 }
-
-.view-range {}
-
 .view-range:hover::-webkit-scrollbar-thumb,
 .playlist:hover::-webkit-scrollbar-thumb,
 .grid:hover::-webkit-scrollbar-thumb {
     background: rgba(75, 75, 75, 0.315);
     opacity: 0.5;
-    display: block;
-}
-
-.grid:hover::-webkit-scrollbar-track,
-.grid:hover::-webkit-scrollbar {
     display: block;
 }
 
@@ -445,8 +430,8 @@ thead {
 
 .song:hover {
     background-color: #e8ecf4;
+    cursor: pointer;
 }
-
 
 /* List */
 
@@ -459,15 +444,15 @@ table tr {
     justify-content: center;
 }
 
-.playlist tr>td:first-child,
-.playlist tr>td:last-child {
+.playlist tr > td:first-child,
+.playlist tr > td:last-child {
     text-align: center;
 }
 
-.playlist td>img {
-    width: 40px;
-    height: 40px;
+.playlist td > img {
+    width: 65%;
     border-radius: 10px;
+    height: 90%;
 }
 
 table td {
@@ -496,7 +481,6 @@ table td {
     text-align: center;
     margin: 0 5px;
 }
-
 
 /* ----Grid playlist----- */
 
@@ -536,7 +520,7 @@ table td {
     height: 147px;
 }
 
-.float-play>i {
+.float-play > i {
     font-size: 3rem;
     color: rgb(158, 158, 158);
     position: absolute;
@@ -556,7 +540,7 @@ table td {
     transition: all 0.2s linear;
 }
 
-.song-card:hover>.float-play {
+.song-card:hover > .float-play {
     display: block;
 }
 
@@ -564,7 +548,6 @@ table td {
     font-weight: 600;
     font-size: 1.2rem;
 }
-
 
 /* Controller */
 
@@ -636,7 +619,7 @@ table td {
     cursor: pointer;
 }
 
-.ctl-icn+.ctl-icn {
+.ctl-icn + .ctl-icn {
     margin-left: 30px;
 }
 
@@ -650,13 +633,11 @@ table td {
     width: 27%;
 }
 
-
 /* right side */
 
 .rside {
     padding: 30px 10px 0 20px;
 }
-
 
 /* recent list */
 
@@ -668,7 +649,6 @@ table td {
     width: 60%;
     border-radius: 0;
 }
-
 
 /* ---------modal------ */
 
@@ -699,7 +679,7 @@ table td {
 
 .modal-form {
     box-shadow: 0 0 10px #ffffff;
-    background-image: url(../../asset/img/modal.jpg);
+    background-image: url(/Mp3Player/asset/img/modal.jpg);
     padding: 10px;
     border-radius: 10px;
     background-color: #fff;
@@ -765,7 +745,7 @@ form .right {
     flex-direction: column;
 }
 
-.input-item+.input-item {
+.input-item + .input-item {
     margin-top: 10px;
 }
 
@@ -800,7 +780,7 @@ form .right {
     width: 100%;
 }
 
-.r-container>div+div {
+.r-container > div + div {
     margin-top: 10px;
 }
 
