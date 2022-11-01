@@ -524,8 +524,8 @@ const app = {
         // modal
         modalForm.onclick = (e) => {
             const elClass = e.target.classList;
+            e.preventDefault();
             if (elClass.contains("form-submit")) {
-                e.preventDefault();
                 const id =
                     e.target.dataset.id === "undefined"
                         ? app.songs.length + 1
@@ -552,7 +552,7 @@ const app = {
             } else if (elClass.contains("form-cancel")) {
                 app.hideModal();
             } else if (elClass.contains("form-del")) {
-                app.deletSong(e.target.dataset.id);
+                app.deleteSong(e.target.dataset.id);
             } else if (elClass.contains("form-image")) {
                 $(".img-submit").classList.toggle("hidden");
             }
@@ -751,7 +751,7 @@ const app = {
             }, 700);
         } catch (error) {}
     },
-    deletSong: function (id) {
+    deleteSong: function (id) {
         const check = confirm("Do you really want to delete this song?");
         if (check) {
             app.songs.splice(id, 1);
