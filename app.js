@@ -305,6 +305,7 @@ const app = {
                 (app.page - 1) * app.elementsPerPage,
                 (app.page - 1) * app.elementsPerPage + app.elementsPerPage,
             );
+
             $(".page-num").value = app.page;
         } else {
             app.addId();
@@ -440,7 +441,7 @@ const app = {
             if (app.page > Math.ceil(app.songs.length / app.elementsPerPage)) {
                 app.page = 1;
             }
-            $(".page-num").value = app.page;
+            // $(".page-num").value = app.page;
             app.pagination();
             if (app.searchSongs) {
                 app.pagination(app.searchSongs);
@@ -721,7 +722,7 @@ const app = {
             newIndex = Math.floor(Math.random() * app.songs.length);
         } while (newIndex === app.currentIndex);
         app.currentIndex = newIndex;
-        let newPage = Math.ceil((app.currentIndex + 1) / app.pagedSongs.length);
+        let newPage = Math.ceil((app.currentIndex + 1) / app.elementsPerPage);
         if (app.page != newPage) {
             app.page = newPage;
             app.pagination();
