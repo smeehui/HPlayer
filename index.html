@@ -13,7 +13,6 @@
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
         />
     </head>
-
     <body>
         <div class="site-container">
             <header class="site-header mlr-a">
@@ -387,15 +386,16 @@
                                         color: rgb(87, 87, 87);
                                         height: 35px;
                                     "
+                                    onclick="document.getElementById('mp3').click()"
                                 >
                                     Up load</label
                                 >
                                 <input
                                     type="file"
                                     id="mp3"
-                                    hidden
                                     class="edit-input"
                                     accept="audio/*"
+                                    style="display: none"
                                 />
                             </div>
                         </div>
