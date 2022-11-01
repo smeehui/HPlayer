@@ -12,3 +12,6 @@
         transform: rotate(0deg);
     }
 }
+.ease {
+    transition: all 0.2s ease-in-out;
+}
