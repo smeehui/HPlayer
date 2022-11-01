@@ -138,6 +138,7 @@ const app = {
         aud.volume = app.config.volume || 0.2;
         app.currentIndex = app.config.currentIndex || 0;
         app.page = app.config.page || 1;
+        app.playedSongs = app.config.playedSongs || [];
         suffleBtn.classList.toggle("active", app.isSuffle);
         repeatBtn.classList.toggle("active", app.isRepeated);
     },
@@ -253,9 +254,7 @@ const app = {
         const htmls = `
                 <div class="player-container" style="background-image: url(${
                     app.currentSong.img
-                }); transition : all .3s linear; ${
-            app.isShortView ? "height: 220px" : "height:110px"
-        }">
+                }); ${app.isShortView ? "height: 220px" : "height:110px"}">
                     <div class="playing-img-con" style="background-image: url(${
                         app.currentSong.img
                     });background-size: 200px 200px">
@@ -509,7 +508,7 @@ const app = {
             app.isRepeated = app.isRepeated ? false : true;
             suffleBtn.classList.toggle("active", app.isSuffle);
             repeatBtn.classList.toggle("active", app.isRepeated);
-            ud.loop = app.isRepeated ? true : false;
+            aud.loop = app.isRepeated ? true : false;
             app.setConfig("isRepeated", app.isRepeated);
         };
 
@@ -669,9 +668,15 @@ const app = {
     },
     addPlayed: (index) => {
         const playedSongs = app.songs.filter((song) => song.id === index);
+        const localSongs = app.config.playedSongs || [];
         app.playedSongs = Array.from(
-            new Set([...playedSongs, ...app.playedSongs]),
+            new Set([...playedSongs, ...app.playedSongs, ...localSongs]),
         );
+        app.playedSongs = app.playedSongs.filter(
+            (value, index, self) =>
+                index === self.findIndex((t) => t.id === value.id),
+        );
+        app.setConfig("playedSongs", app.playedSongs);
     },
     nextSong: () => {
         app.currentIndex++;
@@ -907,6 +912,7 @@ const app = {
         // Render cac thanh phan
         app.renderPlaying();
         app.render();
+        app.renderPlayedList();
         // Xu ly xu kien
         app.handleEvents();
         // LoadSong
