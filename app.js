@@ -258,7 +258,7 @@ const app = {
                 <div class="player-container" style="background-image: url(${
                     app.currentSong.img
                 }); ${app.isShortView ? "height: 220px" : "height:110px"}">
-                    <div class="playing-img-con" style="background-image: url(${
+                    <div class="playing-img-con hov-z" style="background-image: url(${
                         app.currentSong.img
                     });background-size: 200px 200px">
                     <div class="cd-inside"></div>
@@ -406,7 +406,7 @@ const app = {
                 const value = Number(
                     element.closest(".edit").parentElement.dataset.index,
                 );
-                delBtn.classList.toggle("hidden");
+                delBtn.classList.remove("hidden");
                 imgSubmit.classList.add("hidden");
                 formImage.style.animation =
                     "spin 3s cubic-bezier(0.075, 0.82, 0.165, 1) 0.5s";
@@ -565,7 +565,6 @@ const app = {
             }
         };
         $(".close-modal").onclick = () => {
-            delBtn.classList.add("hidden");
             $(".form").reset();
             imgSubmit.classList.toggle("hidden");
             app.hideModal();
@@ -581,6 +580,7 @@ const app = {
             app.render();
         };
         add.onclick = () => {
+            delBtn.classList.add("hidden");
             app.openModal();
             app.openEdit();
         };
@@ -801,6 +801,10 @@ const app = {
     },
     updateSong: (song) => {
         const id = song.id;
+        if (!song.path.trim()) {
+            alert("Song's path must be specified");
+            return;
+        }
         if (id <= app.songs.length) {
             app.songs[id].img = song.newImg;
             app.songs[id].title = song.title;
@@ -820,7 +824,6 @@ const app = {
                 img: song.newImg,
                 path: song.path,
             };
-            console.log(newSong);
             app.songs.push(newSong);
         }
         if (app.searchSongs) {

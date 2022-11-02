@@ -6,7 +6,17 @@
     box-sizing: border-box;
 }
 body {
-    background-color: #b202a6;
+    background-color: #4158d0;
+    background-image: linear-gradient(
+        43deg,
+        #4158d0 0%,
+        #c850c0 25%,
+        #ffcc70 50%,
+        #c850c0 75%,
+        #4158d0 100%
+    );
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
 }
 :root {
     font-size: 14px;
@@ -200,6 +210,7 @@ body {
 }
 
 .playing-img-con {
+    transition: transform 0.2s linear;
     position: relative;
     min-width: 200px;
     min-height: 200px;
@@ -376,7 +387,14 @@ table td {
     width: 100%;
     overflow-x: scroll;
     scroll-snap-type: x unset;
-    background-color: #60adf5;
+    background-image: linear-gradient(
+        43deg,
+        #4158d0 0%,
+        #c850c0 25%,
+        #ffcc70 50%,
+        #c850c0 75%,
+        #4158d0 100%
+    );
     border-radius: 10px;
     gap: 10px;
 }
@@ -420,10 +438,12 @@ table td {
     width: 100%;
     height: 147px;
 }
+.song-card {
+    transition: all 0.2s linear;
+}
 
 .song-card:hover {
     transform: scale(1.2);
-    transition: all 0.2s linear;
 }
 
 .song-card:hover > .float-play {
