@@ -136,7 +136,10 @@ const app = {
         app.isSuffle = app.config.isSuffle || false;
         app.isRepeated = app.config.isRepeated || false;
         aud.volume = app.config.volume || 0.2;
-        app.currentIndex = app.config.currentIndex || 0;
+        app.currentIndex =
+            app.config.currentIndex > app.db.length - 1
+                ? 0
+                : app.config.currentIndex || 0;
         app.page = app.config.page || 1;
         app.playedSongs = app.config.playedSongs || [];
         suffleBtn.classList.toggle("active", app.isSuffle);
@@ -173,7 +176,7 @@ const app = {
                                 <td >
                                     <img class="pointer" src="${
                                         song.img
-                                    }" style="display:block;object-fit:fill"/>
+                                    }" style="display:block;"  width="47" height="47"/>
                                 </td>
                                 <td class="prim pointer">${song.title}</td>
                                 <td>${song.artist}</td>
@@ -207,7 +210,7 @@ const app = {
                                 <td>
                                     <img class="pointer" src="${
                                         song.img
-                                    }" style=" display:block;object-fit:fill"/>
+                                    }" style="display:block;" width="47" height="47"/>
                                 </td>
                                 <td class="prim pointer">${song.title}</td>
                                 <td>${song.artist}</td>
@@ -525,8 +528,8 @@ const app = {
         // modal
         modalForm.onclick = (e) => {
             const elClass = e.target.classList;
-            e.preventDefault();
             if (elClass.contains("form-submit")) {
+                e.preventDefault();
                 const id =
                     e.target.dataset.id === "undefined"
                         ? app.songs.length + 1
@@ -537,7 +540,9 @@ const app = {
                 const genre = formGenre.value;
                 const img = textInp.value.trim()
                     ? `"${textInp.value}"`
-                    : formImage.style.backgroundImage.match(/".*"/g)[0];
+                    : formImage.style.backgroundImage
+                    ? formImage.style.backgroundImage.match(/".*"/g)[0]
+                    : "'./asset/img/noimg.jpg'";
                 const newImg = img.slice(1, img.length - 1);
                 const path = mp3.dataset.url ? mp3.dataset.url : " ";
                 app.updateSong({
@@ -553,6 +558,7 @@ const app = {
             } else if (elClass.contains("form-cancel")) {
                 app.hideModal();
             } else if (elClass.contains("form-del")) {
+                e.preventDefault();
                 app.deleteSong(e.target.dataset.id);
             } else if (elClass.contains("form-image")) {
                 $(".img-submit").classList.toggle("hidden");
@@ -814,6 +820,7 @@ const app = {
                 img: song.newImg,
                 path: song.path,
             };
+            console.log(newSong);
             app.songs.push(newSong);
         }
         if (app.searchSongs) {
@@ -825,6 +832,8 @@ const app = {
         }
     },
     hideModal: function () {
+        $(".form-image").style.backgroundImage = "";
+        mp3.dataset.url = " ";
         formImage.style.animation = "none";
         modalForm.style.top = "-22%";
         modal.classList.add("hidden");
