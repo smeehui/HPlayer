@@ -1,10 +1,8 @@
-a = [1, 2, 3, 4];
-b = a.slice(0, 4);
-b.push(5);
+function A(m, n) {
+    if (m == 0) return n + 1;
+    else if (m > 0 && n == 0) return A(m - 1, 1);
+    else if (m > 0 && n > 0) return A(m - 1, A(m, n - 1));
+    return n + 1;
+}
 
-console.log(a, b);
-
-x = 3;
-y = x;
-
-console.log(x, y);
+console.log(A(4, 3));

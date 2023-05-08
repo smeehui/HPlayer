@@ -29,8 +29,9 @@ body {
     width: 100%;
     display: flex;
     flex-direction: column;
-    height: 94vh;
+    height: 100vh;
     padding: 10px 5px;
+    overflow: hidden;
 }
 
 .site-header {
@@ -496,7 +497,8 @@ table td {
     width: 16px;
     height: 7px;
     border-radius: 10px;
-    background: #494949;
+    background: #ff5858;
+    /* background-image: var(--light--gradient); */
     cursor: pointer;
 }
 
@@ -504,7 +506,7 @@ table td {
 .volume-slider:hover::-webkit-slider-thumb {
     width: 20px;
     height: 11px;
-    background-color: #cbd1dc;
+    background-color: #0059ff;
     transition: linear 0.2s;
 }
 
